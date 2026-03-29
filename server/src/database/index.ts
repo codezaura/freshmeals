@@ -5,7 +5,7 @@ import { ENV } from "../configs/env-variables";
 
 export async function connectDB() {
   try {
-    const connectionInstance = await mongoose.connect(`${ENV.MONGODB_URI}`);
+    const connectionInstance = await mongoose.connect(ENV.MONGODB_URI!);
 
     if (connectionInstance) {
       console.log(
@@ -14,6 +14,6 @@ export async function connectDB() {
     }
   } catch (error) {
     console.log(`Database connection failure: ${error}`);
-    process.exit(1);
+    throw error;
   }
 }
