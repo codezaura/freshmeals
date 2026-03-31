@@ -1,8 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
+import type { ISellerInformation } from "./seller.model";
 
 // -------------------------------------------------------------
 
-export interface IMeal {
+export interface IMeal extends ISellerInformation {
   meal_name: string;
   meal_price: string;
   meal_imgUrl: string;
@@ -31,6 +32,16 @@ const MealSchema = new Schema<IMealDocument>(
     },
     meal_imgUrl: {
       type: String,
+    },
+    seller_information: {
+      seller_name: { type: String, required: true },
+      seller_avatarUrl: { type: String },
+      seller_id: { type: Schema.Types.ObjectId, ref: "user" },
+      seller_level: {
+        type: String,
+        enum: ["", "Beginner", "Intermediate", "Elite"],
+        default: "",
+      },
     },
   },
   {
