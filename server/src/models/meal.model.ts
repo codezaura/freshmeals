@@ -6,7 +6,7 @@ import type { ISellerInformation } from "./seller.model";
 export interface IMeal extends ISellerInformation {
   meal_name: string;
   meal_price: string;
-  meal_imgUrl: string;
+  meal_img_url?: string;
 }
 
 export interface IMealDocument extends IMeal, Document {
@@ -28,11 +28,10 @@ const MealSchema = new Schema<IMealDocument>(
     },
     meal_price: {
       type: String,
+      default: "0",
       required: [true, "price is required for meal"],
     },
-    meal_imgUrl: {
-      type: String,
-    },
+    meal_img_url: { type: String },
     seller_information: {
       seller_name: { type: String, required: true },
       seller_avatarUrl: { type: String },
