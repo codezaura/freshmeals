@@ -58,7 +58,7 @@ export async function createSellerMeal(req: Request, res: Response) {
     res.status(201).json({ message: "meal created successfully!", data: meal });
   } catch (error) {
     res.status(500).json({ message: "Unable to create meal" });
-    throw error;
+    return;
   }
 }
 
@@ -78,7 +78,7 @@ export async function getSellerMeals(req: Request, res: Response) {
     res.status(200).json({ data: meals });
   } catch (error) {
     res.status(400).json({ message: "Unable to fetch meals" });
-    throw error;
+    return;
   }
 }
 
@@ -106,7 +106,7 @@ export async function getSellerMeal(req: Request, res: Response) {
     res.status(200).json({ data: meal });
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch meal" });
-    throw error;
+    return;
   }
 }
 
@@ -146,7 +146,7 @@ export async function updateSellerMeal(req: Request, res: Response) {
       .json({ message: "Meal updated successfully", data: updatedMeal });
   } catch (error) {
     res.status(500).json({ message: "Unable to update meal" });
-    throw error;
+    return;
   }
 }
 
@@ -182,7 +182,7 @@ export async function deleteSellerMeal(req: Request, res: Response) {
       .json({ message: "Meal deleted successfully", data: deletedMeal });
   } catch (error) {
     res.status(500).json({ message: "Unable to delete meal" });
-    throw error;
+    return;
   }
 }
 

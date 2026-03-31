@@ -35,7 +35,7 @@ const MealSchema = new Schema<IMealDocument>(
     seller_information: {
       seller_name: { type: String, required: true },
       seller_avatarUrl: { type: String },
-      seller_id: { type: Schema.Types.ObjectId, ref: "user" },
+      seller_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
       seller_level: {
         type: String,
         enum: ["", "Beginner", "Intermediate", "Elite"],
