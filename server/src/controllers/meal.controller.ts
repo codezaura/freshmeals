@@ -157,6 +157,11 @@ export async function deleteMeal(req: Request, res: Response) {
       return;
     }
 
+    await Plate.updateMany(
+      { "plate_items.meal_id": meal._id },
+      { $pull: { plate_items: { meal_id: meal._id } } },
+    );
+
     const deletedMeal = await Meal.findByIdAndDelete(meal_id);
 
     if (!deletedMeal) {
@@ -208,9 +213,10 @@ export async function createMealPlate(req: Request, res: Response) {
       return;
     }
 
-    const meals = await Meal.find({ _id: { $in: plate_items } }).select(
-      "_id meal_name",
-    );
+    const meals = await Meal.find({
+      _id: { $in: plate_items },
+      "seller_information.seller_id": user.id,
+    }).select("_id meal_name");
 
     if (meals.length !== plate_items.length) {
       res.status(400).json({ message: "One or more meal IDs are invalid" });
@@ -316,7 +322,7 @@ export async function updateMealPlate(req: Request, res: Response) {
       return;
     }
 
-    const updatedPlate = await Meal.findByIdAndUpdate(plate_id, updates, {
+    const updatedPlate = await Plate.findByIdAndUpdate(plate_id, updates, {
       new: true,
     });
 
@@ -327,9 +333,9 @@ export async function updateMealPlate(req: Request, res: Response) {
 
     res
       .status(200)
-      .json({ message: "Meal updated successfully", data: updatedPlate });
+      .json({ message: "Plate updated successfully", data: updatedPlate });
   } catch (error) {
-    res.status(500).json({ message: "Unable to update meal" });
+    res.status(500).json({ message: "Unable to update plate" });
     return;
   }
 }
@@ -340,7 +346,7 @@ export async function deleteMealPlate(req: Request, res: Response) {
   try {
     const { plate_id } = req.params;
 
-    const plate = await Meal.findById(plate_id);
+    const plate = await Plate.findById(plate_id);
 
     if (!plate) {
       res.status(404).json({ message: "Plate not found!" });
@@ -355,7 +361,7 @@ export async function deleteMealPlate(req: Request, res: Response) {
       return;
     }
 
-    const deletedPlate = await Meal.findByIdAndDelete(plate_id);
+    const deletedPlate = await Plate.findByIdAndDelete(plate_id);
 
     if (!deletedPlate) {
       res.status(404).json({ message: "Plate not found" });
@@ -364,7 +370,7 @@ export async function deleteMealPlate(req: Request, res: Response) {
 
     res
       .status(200)
-      .json({ message: "Meal deleted successfully", data: deletedPlate });
+      .json({ message: "Plate deleted successfully", data: deletedPlate });
   } catch (error) {
     res.status(500).json({ message: "Unable to delete plate" });
     return;

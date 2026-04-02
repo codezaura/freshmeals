@@ -19,6 +19,8 @@ router.get("/plate/:plate_id", Controller.getMealPlate);
 
 router.put("/plate/:plate_id", Controller.updateMealPlate);
 
+router.delete("/plate/:plate_id", Controller.deleteMealPlate);
+
 router.patch("/plate/:plate_id/add/:meal_id", Controller.addPlateItem);
 
 router.patch("/plate/:plate_id/remove/:meal_id", Controller.removePlateItem);
