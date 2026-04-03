@@ -1,0 +1,11 @@
+import { HomeHero } from "./home-hero";
+
+// -----------------------------------------------------------------------
+
+export function HomeView() {
+  return (
+    <div>
+      <HomeHero />
+    </div>
+  );
+}
