@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "@/lib/axios";
+import axios, { endpoints } from "@/lib/axios";
 
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
@@ -14,7 +14,7 @@ export function useAuthActions() {
 
   const login = async (credentials: { email: string; password: string }) => {
     try {
-      const response = await axios.post("/auth/login", credentials);
+      const response = await axios.post(endpoints.auth.login, credentials);
       const { token } = response.data;
 
       setCookie("auth_token", token);
@@ -37,7 +37,7 @@ export function useAuthActions() {
     password: string;
   }) => {
     try {
-      await axios.post("/auth/signup", data);
+      await axios.post(endpoints.auth.signup, data);
 
       router.push("/login");
     } catch (error) {

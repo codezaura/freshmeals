@@ -40,7 +40,7 @@ export async function createMeal(req: Request, res: Response) {
       },
     });
 
-    res.status(201).json({ message: "meal created successfully!", data: meal });
+    res.status(201).json(meal);
   } catch (error) {
     res.status(500).json({ message: "Unable to create meal" });
     return;
@@ -58,9 +58,16 @@ export async function getMeals(req: Request, res: Response) {
       return;
     }
 
+    const isRegisteredSeller = user.is_registered_seller;
+
+    if (!isRegisteredSeller) {
+      res.status(401).json({ message: "User is not registered as seller" });
+      return;
+    }
+
     const meals = await Meal.find({ "seller_information.seller_id": user.id });
 
-    res.status(200).json({ data: meals });
+    res.status(200).json(meals);
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch meals" });
     return;
@@ -88,7 +95,7 @@ export async function getMeal(req: Request, res: Response) {
       return;
     }
 
-    res.status(200).json({ data: meal });
+    res.status(200).json(meal);
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch meal" });
     return;
@@ -135,9 +142,7 @@ export async function updateMeal(req: Request, res: Response) {
       );
     }
 
-    res
-      .status(200)
-      .json({ message: "Meal updated successfully", data: updatedMeal });
+    res.status(200).json(updatedMeal);
   } catch (error) {
     res.status(500).json({ message: "Unable to update meal" });
     return;
@@ -177,9 +182,7 @@ export async function deleteMeal(req: Request, res: Response) {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Meal deleted successfully", data: deletedMeal });
+    res.status(200).json(deletedMeal);
   } catch (error) {
     res.status(500).json({ message: "Unable to delete meal" });
     return;
@@ -206,8 +209,6 @@ export async function createMealPlate(req: Request, res: Response) {
       res.status(401).json({ message: "User is not registered seller" });
       return;
     }
-
-    console.log({ plate_name, plate_price, plate_img_url });
 
     if ([plate_name, plate_price, plate_img_url].some((f) => !f)) {
       res.status(400).json({ message: "All fields are required!" });
@@ -248,9 +249,7 @@ export async function createMealPlate(req: Request, res: Response) {
       },
     });
 
-    res
-      .status(201)
-      .json({ message: "plate created successfully!", data: plate });
+    res.status(201).json(plate);
   } catch (error) {
     res.status(500).json({ message: "Unable to create plate" });
     return;
@@ -272,7 +271,7 @@ export async function getMealPlates(req: Request, res: Response) {
       "seller_information.seller_id": user.id,
     });
 
-    res.status(200).json({ data: plates });
+    res.status(200).json(plates);
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch plates" });
     return;
@@ -300,7 +299,7 @@ export async function getMealPlate(req: Request, res: Response) {
       return;
     }
 
-    res.status(200).json({ data: plate });
+    res.status(200).json(plate);
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch plate" });
     return;
@@ -339,9 +338,7 @@ export async function updateMealPlate(req: Request, res: Response) {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Plate updated successfully", data: updatedPlate });
+    res.status(200).json(updatedPlate);
   } catch (error) {
     res.status(500).json({ message: "Unable to update plate" });
     return;
@@ -376,9 +373,7 @@ export async function deleteMealPlate(req: Request, res: Response) {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Plate deleted successfully", data: deletedPlate });
+    res.status(200).json(deletedPlate);
   } catch (error) {
     res.status(500).json({ message: "Unable to delete plate" });
     return;
@@ -434,7 +429,7 @@ export async function addPlateItem(req: Request, res: Response) {
       return;
     }
 
-    res.status(201).json({ message: "Plate item added", data: updatedPlate });
+    res.status(201).json(updatedPlate);
   } catch (error) {
     res.status(500).json({ message: "Unable to add item in plate" });
     return;
@@ -482,7 +477,7 @@ export async function removePlateItem(req: Request, res: Response) {
       return;
     }
 
-    res.status(200).json({ message: "Plate item removed", data: updatedPlate });
+    res.status(200).json(updatedPlate);
   } catch (error) {
     res.status(500).json({ message: "Unable to add item in plate" });
     return;
@@ -503,6 +498,13 @@ export async function getMealCollection(req: Request, res: Response) {
       return;
     }
 
+    const isRegisteredSeller = user.is_registered_seller;
+
+    if (!isRegisteredSeller) {
+      res.status(401).json({ message: "User is not registered as seller" });
+      return;
+    }
+
     const meals = await Meal.find({ "seller_information.seller_id": user.id });
 
     if (!meals) {
@@ -519,9 +521,7 @@ export async function getMealCollection(req: Request, res: Response) {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Seller collection fetched", data: { meals, plates } });
+    res.status(200).json({ meals, plates });
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch seller collection" });
     return;

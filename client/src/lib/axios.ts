@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { CONFIG } from "@/config-global";
 
 import { getCookie } from "cookies-next";
@@ -26,3 +26,39 @@ axiosInstance.interceptors.request.use(
 );
 
 export default axiosInstance;
+
+// -------------------------------------------------------------
+
+export const fetcher = async (
+  ...args: [url: string, config?: AxiosRequestConfig]
+) => {
+  const [url, config] = args;
+
+  const res = await axiosInstance.get(url, config);
+  return res.data;
+};
+
+// -------------------------------------------------------------
+
+export const endpoints = {
+  auth: {
+    login: "/auth/login",
+    signup: "/auth/signup",
+  },
+  general: {
+    meal: {
+      root: "/meal",
+      plate: "/meal/plate",
+      collection: "/meal/collection",
+      recent_ordered: "/meal/recent_ordered",
+      most_ordered: {
+        item: "/meal/most_ordered/item",
+        plate: "/meal/most_ordered/plate",
+      },
+    },
+    seller: {
+      register: "/seller/register",
+      unregister: "/seller/unregister",
+    },
+  },
+};
