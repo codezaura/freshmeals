@@ -120,13 +120,10 @@ export async function updateMeal(req: Request, res: Response) {
       return;
     }
 
-    if (meal_name && meal_name !== meal.meal_name) {
-      await Plate.updateMany(
-        { "plate_items.meal_id": meal.id },
-        { $set: { "plate_items.$[item].meal_name": updatedMeal.meal_name } },
-        { arrayFilters: [{ "item.meal_id": meal.id }] },
-      );
-    }
+    await Plate.updateMany(
+      { plate_items: meal._id },
+      { $pull: { plates_items: meal._id } },
+    );
 
     res.status(200).json(updatedMeal);
   } catch (error) {
@@ -536,13 +533,18 @@ export async function orderMeal(req: Request, res: Response) {}
 
 export async function getAllMeals(req: Request, res: Response) {
   try {
+    const size = Math.min(Number(req.query.size) || 20, 100);
+    const page = Math.max(Number(req.query.page) || 1, 1);
+
     const meals = await Meal.find()
       .populate({
         path: "seller_information.seller",
         model: "user",
         select: "id name avatar_url",
       })
-      .sort({ createdAt: "desc" })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * size)
+      .limit(size)
       .select("-createdAt -updatedAt");
 
     res.status(200).json(meals);
