@@ -29,35 +29,33 @@ export async function makeAnOrder(req: Request, res: Response) {
       return;
     }
 
-    const resolvedItems = order_items.map(async (item: IOrderItem) => {
-      if (item.type === "Meal") {
-        const meal = await Meal.findById(item.meal);
-
-        if (!meal) {
-          res.status(404).json({ message: "Meal not found" });
-          return;
+    const resolvedItems = await Promise.all(
+      order_items.map(async (item: IOrderItem) => {
+        if (item.type === "Meal") {
+          const meal = await Meal.findById(item.meal);
+          if (!meal) {
+            throw { status: 404, message: "Meal not found" };
+          }
+          return {
+            meal: item.meal,
+            type: item.type,
+            quantity: item.quantity,
+          };
         }
-
-        return {
-          meal: item.meal,
-          type: item.type,
-          quantity: item.quantity,
-        };
-      } else if (item.type === "Plate") {
-        const plate = await Plate.findById(item.plate);
-
-        if (!plate) {
-          res.status(404).json({ message: "Plate not found" });
-          return;
+        if (item.type === "Plate") {
+          const plate = await Plate.findById(item.plate);
+          if (!plate) {
+            throw { status: 404, message: "Plate not found" };
+          }
+          return {
+            plate: item.plate,
+            type: item.type,
+            quantity: item.quantity,
+          };
         }
-
-        return {
-          plate: item.plate,
-          type: item.type,
-          quantity: item.quantity,
-        };
-      }
-    });
+        throw { status: 400, message: "Invalid order item type" };
+      }),
+    );
 
     const newOrder = await Order.create({
       delivery_information,

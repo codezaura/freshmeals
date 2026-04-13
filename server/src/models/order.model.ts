@@ -34,8 +34,20 @@ export interface IOrderDocument extends IOrder, Document {}
 
 const OrderItemSchema = new Schema<IOrderItemDocument>(
   {
-    meal: { type: Schema.Types.ObjectId, ref: "meal" },
-    plate: { type: Schema.Types.ObjectId, ref: "plate" },
+    meal: {
+      type: Schema.Types.ObjectId,
+      ref: "meal",
+      required(this: IOrderItemDocument) {
+        return this.type === "Meal";
+      },
+    },
+    plate: {
+      type: Schema.Types.ObjectId,
+      ref: "plate",
+      required(this: IOrderItemDocument) {
+        return this.type === "Plate";
+      },
+    },
     type: {
       type: String,
       enum: ["Meal", "Plate"],
