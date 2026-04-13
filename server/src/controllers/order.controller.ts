@@ -4,6 +4,8 @@ import { MealModel as Meal } from "../models/meal.model";
 import { PlateModel as Plate } from "../models/plate.model";
 import { OrderModel as Order, type IOrderItem } from "../models/order.model";
 
+import { toOrderDto } from "../dtos/order.dto";
+
 // -------------------------------------------------------------
 
 export async function getOrder(req: Request, res: Response) {}
@@ -66,7 +68,6 @@ export async function placeOrder(req: Request, res: Response) {
     const order = await Order.findById(newOrder._id).populate({
       path: "customer",
       model: "user",
-      select: "id name avatar_url",
     });
 
     if (!order) {
@@ -74,7 +75,7 @@ export async function placeOrder(req: Request, res: Response) {
       return;
     }
 
-    res.status(201).json(order);
+    res.status(201).json(toOrderDto(order));
     return;
   } catch (error) {
     res.status(500).json({ message: "Unable to place an order" });
@@ -97,33 +98,26 @@ export async function getOrders(req: Request, res: Response) {
       .populate({
         path: "customer",
         model: "user",
-        select: "id name avatar_url",
       })
       .populate({
         path: "order_items.meal",
         model: "meal",
-        select: "id meal_name meal_img_url meal_price seller_information",
         populate: {
           path: "seller_information.seller",
           model: "user",
-          select: "id name avatar_url",
         },
       })
       .populate({
         path: "order_items.plate",
         model: "plate",
-        select:
-          "id plate_name plate_img_url plate_price plate_items seller_information",
         populate: [
           {
             path: "plate_items",
             model: "meal",
-            select: "id meal_name meal_img_url",
           },
           {
             path: "seller_information.seller",
             model: "user",
-            select: "id name avatar_url",
           },
         ],
       })
@@ -133,7 +127,7 @@ export async function getOrders(req: Request, res: Response) {
       res.status(500).json({ message: "Unable to fetch orders" });
     }
 
-    res.status(200).json(orders);
+    res.status(200).json(orders.map(toOrderDto));
   } catch (error) {
     res.status(500).json({ message: "Unable to fetch orders" });
     return;

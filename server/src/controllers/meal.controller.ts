@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 
 import { toMealDto } from "../dtos/meal.dto";
+import { toPlateDto } from "../dtos/plate.dto";
 
 import { MealModel as Meal } from "../models/meal.model";
 import { PlateModel as Plate } from "../models/plate.model";
-import { toPlateDto } from "../dtos/plate.dto";
 
 // -------------------------------------------------------------
 
@@ -67,8 +67,7 @@ export async function getMeals(req: Request, res: Response) {
         path: "seller_information.seller",
         model: "user",
       })
-      .sort({ createdAt: "desc" })
-      .select("-createdAt -updatedAt");
+      .sort({ createdAt: "desc" });
 
     res.status(200).json(meals.map(toMealDto));
   } catch (error) {
@@ -154,8 +153,8 @@ export async function deleteMeal(req: Request, res: Response) {
     }
 
     await Plate.updateMany(
-      { "plate_items.meal_id": meal.id },
-      { $pull: { plate_items: { meal_id: meal.id } } },
+      { plate_items: meal._id },
+      { $pull: { plate_items: meal._id } },
     );
 
     const deletedMeal = await Meal.findByIdAndDelete(meal_id);
@@ -482,7 +481,6 @@ export async function getMealCollection(req: Request, res: Response) {
     }).populate({
       path: "seller_information.seller",
       model: "user",
-      select: "id name avatar_url",
     });
 
     const plates = await Plate.find({
@@ -534,12 +532,10 @@ export async function getAllMeals(req: Request, res: Response) {
       .populate({
         path: "seller_information.seller",
         model: "user",
-        select: "id name avatar_url",
       })
       .sort({ createdAt: -1 })
       .skip((page - 1) * size)
-      .limit(size)
-      .select("-createdAt -updatedAt");
+      .limit(size);
 
     res.status(200).json(meals.map(toMealDto));
   } catch (error) {

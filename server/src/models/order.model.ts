@@ -9,7 +9,7 @@ export interface IOrderItem {
   quantity: number;
 }
 
-interface IOrderItemDocument extends IOrderItem, Document {}
+export interface IOrderItemSchema extends IOrderItem, Document {}
 
 export type OrderStatus =
   | "Processing"
@@ -28,23 +28,23 @@ export interface IOrder {
   };
 }
 
-export interface IOrderDocument extends IOrder, Document {}
+export interface IOrderSchema extends IOrder, Document {}
 
 // -------------------------------------------------------------
 
-const OrderItemSchema = new Schema<IOrderItemDocument>(
+const OrderItemSchema = new Schema<IOrderItemSchema>(
   {
     meal: {
       type: Schema.Types.ObjectId,
       ref: "meal",
-      required(this: IOrderItemDocument) {
+      required(this: IOrderItemSchema) {
         return this.type === "Meal";
       },
     },
     plate: {
       type: Schema.Types.ObjectId,
       ref: "plate",
-      required(this: IOrderItemDocument) {
+      required(this: IOrderItemSchema) {
         return this.type === "Plate";
       },
     },
@@ -70,7 +70,7 @@ const OrderItemSchema = new Schema<IOrderItemDocument>(
   },
 );
 
-const OrderSchema = new Schema<IOrderDocument>(
+const OrderSchema = new Schema<IOrderSchema>(
   {
     order_items: [OrderItemSchema],
     order_status: {
@@ -108,4 +108,4 @@ const OrderSchema = new Schema<IOrderDocument>(
 
 // -------------------------------------------------------------
 
-export const OrderModel = mongoose.model<IOrderDocument>("order", OrderSchema);
+export const OrderModel = mongoose.model<IOrderSchema>("order", OrderSchema);
