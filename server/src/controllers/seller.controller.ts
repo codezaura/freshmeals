@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { UserModel as User } from "../models/user.model";
 
 import { toUserDto } from "../dtos/user.dto";
+import { toSellerDto } from "../dtos/seller.dto";
 
 // -------------------------------------------------------------
 
@@ -44,7 +45,7 @@ export async function getAllSeller(req: Request, res: Response) {
   try {
     const sellers = await User.find({ is_registered_seller: true });
 
-    res.status(200).json(sellers.map(toUserDto));
+    res.status(200).json(sellers.map(toSellerDto));
   } catch {
     res.status(500).json({ message: "Failed to fetch sellers" });
   }
