@@ -10,7 +10,7 @@ export async function getOrder(req: Request, res: Response) {}
 
 // -------------------------------------------------------------
 
-export async function makeAnOrder(req: Request, res: Response) {
+export async function placeOrder(req: Request, res: Response) {
   try {
     if (!req.userId) {
       res.status(401).json({ message: "Unauthorized: No User ID found" });
@@ -77,14 +77,68 @@ export async function makeAnOrder(req: Request, res: Response) {
     res.status(201).json(order);
     return;
   } catch (error) {
-    res.status(500).json({ message: "Unable to make an order" });
+    res.status(500).json({ message: "Unable to place an order" });
     return;
   }
 }
 
 // -------------------------------------------------------------
 
-export async function getOrders(req: Request, res: Response) {}
+export async function getOrders(req: Request, res: Response) {
+  try {
+    if (!req.userId) {
+      res.status(401).json({ message: "Unauthorized: No User ID found" });
+      return;
+    }
+
+    const orders = await Order.find({
+      customer: req.userId,
+    })
+      .populate({
+        path: "customer",
+        model: "user",
+        select: "id name avatar_url",
+      })
+      .populate({
+        path: "order_items.meal",
+        model: "meal",
+        select: "id meal_name meal_img_url meal_price seller_information",
+        populate: {
+          path: "seller_information.seller",
+          model: "user",
+          select: "id name avatar_url",
+        },
+      })
+      .populate({
+        path: "order_items.plate",
+        model: "plate",
+        select:
+          "id plate_name plate_img_url plate_price plate_items seller_information",
+        populate: [
+          {
+            path: "plate_items",
+            model: "meal",
+            select: "id meal_name meal_img_url",
+          },
+          {
+            path: "seller_information.seller",
+            model: "user",
+            select: "id name avatar_url",
+          },
+        ],
+      })
+      .sort({ createdAt: -1 });
+
+    if (!orders) {
+      res.status(500).json({ message: "Unable to fetch orders" });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Unable to fetch orders" });
+    return;
+  }
+}
 
 // -------------------------------------------------------------
 

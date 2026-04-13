@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/", Controller.getOrders);
 
-router.post("/", Controller.makeAnOrder);
+router.post("/", Controller.placeOrder);
 
 router.get("/:order_id", Controller.getOrder);
 
