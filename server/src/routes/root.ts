@@ -9,10 +9,14 @@ import orderRoutes from "./order.routes";
 import sellerRoutes from "./seller.routes";
 
 import publicRoutes from "./public.routes";
+import _mockRoute from "../_mock/_mock.route";
 
 // -------------------------------------------------------------
 
 const router = Router();
+
+// test
+router.use("/_mock", _mockRoute);
 
 // public
 router.use(publicRoutes);
