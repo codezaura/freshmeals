@@ -1,0 +1,18 @@
+{
+  "console log": {
+    "scope": "typescript, typescriptreact",
+    "prefix": "clg",
+    "body": ["console.log($1)"],
+    "description": "Log to console",
+  },
+
+  "comment divider snippet": {
+    "scope": "typescript, typescriptreact",
+    "prefix": "---",
+    "body": [
+      "// -------------------------------------------------------------",
+      "$1",
+    ],
+    "description": "Used to generate comment divider snippet",
+  },
+}
