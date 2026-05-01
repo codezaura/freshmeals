@@ -32,10 +32,10 @@ export function HomeHero() {
             position: "absolute",
             top: "-10%",
             right: "-5%",
-            width: 125,
-            height: 125,
+            width: 500,
+            height: 500,
             borderRadius: "100%",
-            bgcolor: alpha(theme.palette.success.main, 0.6),
+            bgcolor: alpha(theme.palette.success.main, 0.24),
             filter: "blur(64px)",
           })}
         />
@@ -44,10 +44,10 @@ export function HomeHero() {
             position: "absolute",
             bottom: "-10%",
             left: "-5%",
-            width: 125,
-            height: 125,
+            width: 500,
+            height: 500,
             borderRadius: "100%",
-            bgcolor: alpha(theme.palette.warning.main, 0.6),
+            bgcolor: alpha(theme.palette.warning.main, 0.24),
             filter: "blur(64px)",
           })}
         />
