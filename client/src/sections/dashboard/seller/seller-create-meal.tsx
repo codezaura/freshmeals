@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+// import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import { createMealApi } from "@/actions/meal";
 
@@ -51,20 +51,26 @@ export function SellerCreateMeal() {
   return (
     <Card sx={{ p: 4, borderRadius: 3 }}>
       <Stack spacing={2.5}>
-        <Stack direction="row" spacing={1.25} alignItems="center">
+        <Stack direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
           <RestaurantMenuIcon color="primary" fontSize="large" />
           <Typography variant="h4">Create New Meal</Typography>
         </Stack>
 
         <Typography color="text.secondary">
-          Add a new menu item with pricing and image URL so customers can discover
-          your latest dish.
+          Add a new menu item with pricing and image URL so customers can
+          discover your latest dish.
         </Typography>
 
         {successMessage && <Alert severity="success">{successMessage}</Alert>}
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-        <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" } }}>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          }}
+        >
           <TextField
             value={name}
             label="Meal name"
@@ -94,7 +100,7 @@ export function SellerCreateMeal() {
             size="large"
             onClick={handleSubmit}
             loading={isLoading}
-            startIcon={<AddCircleOutlineIcon />}
+            // startIcon={<AddCircleOutlineIcon />}
           >
             Create Meal
           </Button>

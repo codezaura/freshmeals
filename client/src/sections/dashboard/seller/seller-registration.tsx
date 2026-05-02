@@ -27,7 +27,9 @@ export function SellerRegistration() {
 
     try {
       await registerSellerApi();
-      setSuccessMessage("You are now registered as a seller. Refresh to continue.");
+      setSuccessMessage(
+        "You are now registered as a seller. Refresh to continue.",
+      );
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Unable to register as seller";
@@ -40,18 +42,22 @@ export function SellerRegistration() {
   return (
     <Card sx={{ p: 4, borderRadius: 3 }}>
       <Stack spacing={2.5}>
-        <Stack direction="row" spacing={1.25} alignItems="center">
+        <Stack direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
           <StorefrontIcon color="primary" fontSize="large" />
           <Typography variant="h4">Become a FreshMeals Seller</Typography>
         </Stack>
 
         <Typography color="text.secondary">
-          Register your account to start listing meals and managing your menu from
-          the seller dashboard.
+          Register your account to start listing meals and managing your menu
+          from the seller dashboard.
         </Typography>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-          <Chip icon={<VerifiedUserIcon />} label="Instant activation" color="success" />
+          <Chip
+            icon={<VerifiedUserIcon />}
+            label="Instant activation"
+            color="success"
+          />
           <Chip label="Secure seller access" variant="outlined" />
           <Chip label="Start creating meals" variant="outlined" />
         </Box>
