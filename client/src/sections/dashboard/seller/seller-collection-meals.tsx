@@ -17,20 +17,7 @@ import type { Meal } from "@/types/meal.type";
 
 export function SellerCollectionMeals({ meals = [] }: { meals: Meal[] }) {
   return (
-    <Paper
-      variant="outlined"
-      sx={{
-        p: { xs: 2, md: 3 },
-        mt: 3,
-        borderRadius: 4,
-        borderColor: "divider",
-        bgcolor: "background.paper",
-      }}
-    >
-      <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>
-        Meals
-      </Typography>
-
+    <>
       <Grid container spacing={2.5}>
         {meals.map((meal) => (
           <Grid key={meal.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
@@ -62,11 +49,22 @@ export function SellerCollectionMeals({ meals = [] }: { meals: Meal[] }) {
                   {meal.meal_name}
                 </Typography>
 
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
                     ${meal.meal_price}
                   </Typography>
-                  <Chip label="Meal" size="small" color="primary" variant="outlined" />
+                  <Chip
+                    label="Meal"
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                  />
                 </Box>
 
                 <Divider />
@@ -77,7 +75,11 @@ export function SellerCollectionMeals({ meals = [] }: { meals: Meal[] }) {
                     alt={meal.seller_information.seller.name}
                     sx={{ height: 28, width: 28 }}
                   />
-                  <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "text.secondary" }}
+                    noWrap
+                  >
                     {meal.seller_information.seller.name}
                   </Typography>
                 </Box>
@@ -86,6 +88,6 @@ export function SellerCollectionMeals({ meals = [] }: { meals: Meal[] }) {
           </Grid>
         ))}
       </Grid>
-    </Paper>
+    </>
   );
 }
