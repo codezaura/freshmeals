@@ -9,6 +9,7 @@ import { useGetMealCollection } from "@/actions/meal";
 import { LoadingScreen } from "@/components/loading";
 import { SellerCollectionMeals } from "../seller-collection-meals";
 import { SellerCollectionPlates } from "../seller-collection-plates";
+import { SellerCollection } from "../seller-collection";
 
 // -----------------------------------------------------------------------
 
@@ -35,11 +36,7 @@ export function SellerView() {
         <SellerCreateMeal />
       )}
 
-      {collection.meals && <SellerCollectionMeals meals={collection.meals} />}
-
-      {collection.plates && (
-        <SellerCollectionPlates plates={collection.plates} />
-      )}
+      <SellerCollection collection={collection} />
     </DashboardContent>
   );
 }
