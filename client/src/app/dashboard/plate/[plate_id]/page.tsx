@@ -1,6 +1,18 @@
-import { PlateDetailView } from "@/sections/dashboard/details/detail-view";
+import type { Metadata } from "next";
+import { PlateDetailView } from "@/sections/dashboard/details/view";
+import { CONFIG } from "@/config-global";
 
-export default async function PlatePage({ params }: { params: Promise<{ plate_id: string }> }) {
+// -------------------------------------------------------------
+
+export const metadata: Metadata = {
+  title: `Meal details | ${CONFIG.site.name}`,
+};
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ plate_id: string }>;
+}) {
   const { plate_id } = await params;
   return <PlateDetailView plateId={plate_id} />;
 }

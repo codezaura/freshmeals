@@ -24,6 +24,8 @@ import {
   useGetMealPlate,
 } from "@/actions/meal";
 
+// -------------------------------------------------------------
+
 export function MealDetailView({ mealId }: { mealId: string }) {
   const router = useRouter();
   const { user } = useAuth();
@@ -54,6 +56,8 @@ export function MealDetailView({ mealId }: { mealId: string }) {
     </DashboardContent>
   );
 }
+
+// -------------------------------------------------------------
 
 export function PlateDetailView({ plateId }: { plateId: string }) {
   const router = useRouter();
