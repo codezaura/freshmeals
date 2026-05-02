@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import axios, { endpoints, fetcher } from "@/lib/axios";
 import type { Meal, MealPlate } from "@/types/meal.type";
@@ -20,6 +20,8 @@ export async function createMealApi(
     throw new Error("Unable to create meal!");
   }
 
+  mutate(endpoints.general.meal.collection);
+
   return res.data;
 }
 
@@ -33,6 +35,37 @@ export function useGetMeal(meal_id: string) {
   const URL = `${endpoints.general.meal.root}/${meal_id}`;
 
   return useSWR(URL);
+}
+
+export async function updateMealApi(
+  id: string,
+  data: Omit<Meal, "id" | "seller_information">,
+) {
+  const URL = `${endpoints.general.meal.root}/${id}`;
+
+  const res = await axios.put(URL, data);
+
+  if (res.status !== 201) {
+    throw new Error("Unable to update meal!");
+  }
+
+  mutate(endpoints.general.meal.collection);
+
+  return res.data;
+}
+
+export async function deleteMealApi(id: string) {
+  const URL = `${endpoints.general.meal.root}/${id}`;
+
+  const res = await axios.delete(URL);
+
+  if (res.status !== 201) {
+    throw new Error("Unable to delete meal!");
+  }
+
+  mutate(endpoints.general.meal.collection);
+
+  return res.data;
 }
 
 /* *********************************************************
@@ -49,6 +82,8 @@ export async function createMealPlateApi(
   if (res.status !== 201) {
     throw new Error("Unable to create meal!");
   }
+
+  mutate(endpoints.general.meal.collection);
 
   return res.data;
 }
