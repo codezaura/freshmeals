@@ -176,7 +176,9 @@ export function SellerCreateMeal() {
             </Typography>
 
             {meals.length === 0 ? (
-              <Alert severity="info">Create meals first to build a plate.</Alert>
+              <Alert severity="info">
+                Create meals first to build a plate.
+              </Alert>
             ) : (
               <Box
                 sx={{
@@ -185,12 +187,14 @@ export function SellerCreateMeal() {
                   gridTemplateColumns: {
                     xs: "1fr",
                     sm: "repeat(2, minmax(0, 1fr))",
-                    lg: "repeat(3, minmax(0, 1fr))",
+                    lg: "repeat(5, minmax(0, 1fr))",
                   },
                 }}
               >
                 {meals.map((meal) => {
-                  const isSelected = selectedMeals.some((item) => item.id === meal.id);
+                  const isSelected = selectedMeals.some(
+                    (item) => item.id === meal.id,
+                  );
 
                   return (
                     <Card
@@ -207,7 +211,11 @@ export function SellerCreateMeal() {
                           component="img"
                           src={meal.meal_img_url}
                           alt={meal.meal_name}
-                          sx={{ width: "100%", height: 140, objectFit: "cover" }}
+                          sx={{
+                            width: "100%",
+                            height: 140,
+                            objectFit: "cover",
+                          }}
                         />
 
                         {isSelected && (
@@ -224,7 +232,11 @@ export function SellerCreateMeal() {
                         )}
 
                         <CardContent>
-                          <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between" }}>
+                          <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{ justifyContent: "space-between" }}
+                          >
                             <Typography variant="subtitle2" noWrap>
                               {meal.meal_name}
                             </Typography>
