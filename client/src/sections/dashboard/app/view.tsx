@@ -13,6 +13,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 
+import { Meal } from "@/types/meal.type";
+
 import { useGetAllMeals } from "@/actions/meal";
 
 import { LoadingScreen } from "@/components/loading";
@@ -21,9 +23,11 @@ import { DashboardContent } from "@/components/layout/main";
 // -----------------------------------------------------------------------
 
 export function DashboardAppView() {
-  const { data: meals = [], isLoading, error } = useGetAllMeals();
+  const { data, isLoading, error } = useGetAllMeals();
 
   if (isLoading) return <LoadingScreen />;
+
+  const meals: Meal[] = data.meals;
 
   return (
     <DashboardContent>
@@ -63,13 +67,19 @@ export function DashboardAppView() {
                         {meal.meal_name}
                       </Typography>
 
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      >
                         <Avatar
                           src={meal.seller_information.seller.avatar_url}
                           alt={meal.seller_information.seller.name}
                           sx={{ width: 28, height: 28 }}
                         />
-                        <Typography variant="body2" color="text.secondary" noWrap>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          noWrap
+                        >
                           {meal.seller_information.seller.name}
                         </Typography>
                       </Box>
