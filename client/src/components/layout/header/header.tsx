@@ -1,18 +1,18 @@
 "use client";
 
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 
+import { RouterLink } from "@/routes";
 import { Logo } from "@/components/logo";
 
 import { NavLink } from "./nav-link";
 import { navItems, type NavItem } from "./config-nav";
 
-// -----------------------------------------------------------------------
-
 function NavUl({ navData }: { navData: NavItem[] }) {
   return (
-    <Box component="ul" sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+    <Box component="ul" sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 3 }}>
       {navData.map((navItem) => (
         <Box component="li" key={navItem.path}>
           <NavLink href={navItem.path} value={navItem.value} />
@@ -21,8 +21,6 @@ function NavUl({ navData }: { navData: NavItem[] }) {
     </Box>
   );
 }
-
-// -----------------------------------------------------------------------
 
 export function Header() {
   return (
@@ -33,24 +31,21 @@ export function Header() {
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar,
         width: "100%",
-        bgcolor: "rgba(250, 250, 247, 0.9)",
+        bgcolor: "rgba(248, 247, 244, 0.86)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
-        borderColor: "grey.200",
+        borderColor: "divider",
       }}
     >
       <Container
         maxWidth="lg"
-        sx={{
-          px: 3, // ~px-6
-          height: 64, // h-16
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        sx={{ px: 3, height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}
       >
         <Logo />
         <NavUl navData={navItems} />
+        <Button component={RouterLink} href="/login" variant="contained" size="small">
+          Login
+        </Button>
       </Container>
     </Box>
   );

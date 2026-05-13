@@ -2,11 +2,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
+import { Sparkles, Truck, UtensilsCrossed } from "lucide-react";
 
 const highlights = [
-  { title: "Chef-curated weekly menus", copy: "Seasonal dishes with balanced nutrition and restaurant-grade taste." },
-  { title: "30-minute delivery windows", copy: "Fast, reliable slots that fit your workday and evening routine." },
-  { title: "Fresh ingredients only", copy: "Local produce, lean proteins, and zero compromise on quality." },
+  { title: "Chef-curated weekly menus", copy: "Seasonal dishes with balanced nutrition and restaurant-grade taste.", icon: UtensilsCrossed },
+    { title: "30-minute delivery windows", copy: "Fast, reliable slots that fit your workday and evening routine.", icon: Truck },
+  { title: "Fresh ingredients only", copy: "Local produce, lean proteins, and zero compromise on quality.", icon: Sparkles },
 ];
 
 export function HomeHighlights() {
@@ -20,14 +21,18 @@ export function HomeHighlights() {
         </Typography>
 
         <Grid container spacing={3}>
-          {highlights.map((item) => (
+          {highlights.map((item) => {
+            const Icon = item.icon;
+            return (
             <Grid key={item.title} size={{ xs: 12, md: 4 }}>
               <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: 3, height: "100%", bgcolor: "background.paper" }}>
-                <Typography variant="h6" sx={{ mb: 1.5 }}>{item.title}</Typography>
+                <Icon size={18} />
+                <Typography variant="h6" sx={{ mb: 1.5, mt: 1.5 }}>{item.title}</Typography>
                 <Typography color="text.secondary">{item.copy}</Typography>
               </Box>
             </Grid>
-          ))}
+            );
+          })}
         </Grid>
       </Box>
     </Box>
