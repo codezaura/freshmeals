@@ -48,6 +48,8 @@ export const endpoints = {
   },
   general: {
     meal: {
+      allMeals: "/meals",
+      allPlates: "/plates",
       root: "/meal",
       plate: "/meal/plate",
       collection: "/meal/collection",
@@ -60,6 +62,9 @@ export const endpoints = {
     seller: {
       register: "/seller/register",
       unregister: "/seller/unregister",
+    },
+    order: {
+      root: "/order",
     },
   },
 };

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 import { CONFIG } from "@/config-global";
-import { MealEditView } from "@/sections/dashboard/details/view";
+import { MealOrderView } from "@/sections/dashboard/app/meal-order-view";
 
 export const metadata: Metadata = {
-  title: `Edit meal | ${CONFIG.site.name}`,
+  title: `Order meal | ${CONFIG.site.name}`,
 };
 
 export default async function Page({
@@ -13,5 +13,6 @@ export default async function Page({
   params: Promise<{ meal_id: string }>;
 }) {
   const { meal_id } = await params;
-  return <MealEditView mealId={meal_id} />;
+
+  return <MealOrderView mealId={meal_id} />;
 }
