@@ -1,8 +1,9 @@
+import { Sparkles, Truck, UtensilsCrossed } from "lucide-react";
+
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import { Sparkles, Truck, UtensilsCrossed } from "lucide-react";
 
 const highlights = [
   { title: "Chef-curated weekly menus", copy: "Seasonal dishes with balanced nutrition and restaurant-grade taste.", icon: UtensilsCrossed },

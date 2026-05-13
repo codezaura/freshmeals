@@ -1,7 +1,8 @@
+import { CalendarCheck2, CookingPot, HandPlatter } from "lucide-react";
+
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { CalendarCheck2, CookingPot, HandPlatter } from "lucide-react";
 
 const steps = [
   { label: "01", title: "Pick your meals", desc: "Choose from rotating chef-curated menus each week.", icon: HandPlatter },

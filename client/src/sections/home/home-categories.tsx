@@ -1,8 +1,9 @@
+import { Flame, Leaf, Salad, Users } from "lucide-react";
+
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Flame, Leaf, Salad, Users } from "lucide-react";
 
 import { RouterLink } from "@/routes";
 
@@ -27,7 +28,7 @@ export function HomeCategories() {
             const Icon = cat.icon;
             return (
             <Grid key={cat.name} size={{ xs: 12, sm: 6 }}>
-              <Box sx={{ p: 2.5, borderRadius: 3, bgcolor: "grey.50", border: "1px solid", borderColor: "divider" }}>
+              <Box sx={{ p: 2.5, borderRadius: 3, bgcolor: "background.default", border: "1px solid", borderColor: "divider" }}>
                 <Box sx={{ display: "inline-flex", mb: 1.5 }}><Icon size={18} /></Box>
                 <Typography variant="subtitle1" sx={{ mb: 0.5 }}>{cat.name}</Typography>
                 <Typography variant="body2" color="text.secondary">{cat.desc}</Typography>

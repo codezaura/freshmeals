@@ -1,9 +1,9 @@
 import { extendTheme } from "@mui/material/styles";
 
-import { typography } from "./core/typography";
 import { shadows } from "./core/shadows";
-import { lightScheme } from "./schemes/light";
 import { darkScheme } from "./schemes/dark";
+import { lightScheme } from "./schemes/light";
+import { typography } from "./core/typography";
 import { componentsOverrides } from "./overrides";
 
 export function createTheme() {

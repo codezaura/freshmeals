@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 
-import { RouterLink } from "@/routes";
 import { Logo } from "@/components/logo";
+
+import { RouterLink } from "@/routes";
 
 import { NavLink } from "./nav-link";
 import { ThemeToggle } from "./theme-toggle";
@@ -32,7 +33,8 @@ export function Header() {
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar,
         width: "100%",
-        bgcolor: "rgba(248, 247, 244, 0.86)",
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "rgba(18, 19, 17, 0.86)" : "rgba(248, 247, 244, 0.86)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
         borderColor: "divider",
