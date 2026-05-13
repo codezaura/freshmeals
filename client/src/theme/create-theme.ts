@@ -1,12 +1,22 @@
 import { extendTheme } from "@mui/material/styles";
 
-import { typography, colorSchemes } from "./core";
+import { shadows } from "./core/shadows";
+import { darkScheme } from "./schemes/dark";
+import { lightScheme } from "./schemes/light";
+import { typography } from "./core/typography";
+import { componentsOverrides } from "./overrides";
 
 export function createTheme() {
   return extendTheme({
     colorSchemeSelector: "data",
-    colorSchemes,
+    colorSchemes: {
+      light: lightScheme,
+      dark: darkScheme,
+    },
     typography,
-    shape: { borderRadius: 10 },
+    spacing: 8,
+    shape: { borderRadius: 12 },
+    shadows,
+    components: componentsOverrides,
   });
 }

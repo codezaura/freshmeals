@@ -1,18 +1,21 @@
 "use client";
 
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { alpha } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 
 import { Logo } from "@/components/logo";
 
-import { NavLink } from "./nav-link";
-import { navItems, type NavItem } from "./config-nav";
+import { RouterLink } from "@/routes";
 
-// -----------------------------------------------------------------------
+import { NavLink } from "./nav-link";
+import { ThemeToggle } from "./theme-toggle";
+import { navItems, type NavItem } from "./config-nav";
 
 function NavUl({ navData }: { navData: NavItem[] }) {
   return (
-    <Box component="ul" sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+    <Box component="ul" sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 3 }}>
       {navData.map((navItem) => (
         <Box component="li" key={navItem.path}>
           <NavLink href={navItem.path} value={navItem.value} />
@@ -22,35 +25,39 @@ function NavUl({ navData }: { navData: NavItem[] }) {
   );
 }
 
-// -----------------------------------------------------------------------
-
 export function Header() {
   return (
     <Box
       component="header"
-      sx={{
+      sx={(theme) => ({
         position: "sticky",
         top: 0,
-        zIndex: (theme) => theme.zIndex.appBar,
+        zIndex: theme.zIndex.appBar,
         width: "100%",
-        bgcolor: "rgba(250, 250, 247, 0.9)",
+        bgcolor: alpha(theme.palette.common.white, 0.82),
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
-        borderColor: "grey.200",
-      }}
+        borderColor: alpha(theme.palette.divider, 1),
+        boxShadow: "0 8px 24px rgba(31,31,28,0.08)",
+        ...theme.applyStyles("dark", {
+          bgcolor: alpha(theme.palette.grey[900], 0.76),
+          borderColor: alpha(theme.palette.divider, 0.5),
+          boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+        }),
+      })}
     >
       <Container
         maxWidth="lg"
-        sx={{
-          px: 3, // ~px-6
-          height: 64, // h-16
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        sx={{ px: 3, height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}
       >
         <Logo />
         <NavUl navData={navItems} />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <ThemeToggle />
+          <Button component={RouterLink} href="/login" variant="contained" size="small">
+            Login
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
