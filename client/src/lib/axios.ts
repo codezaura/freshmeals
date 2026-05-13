@@ -63,5 +63,8 @@ export const endpoints = {
       register: "/seller/register",
       unregister: "/seller/unregister",
     },
+    order: {
+      root: "/order",
+    },
   },
 };
