@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { alpha } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 
 import { Logo } from "@/components/logo";
@@ -33,8 +34,7 @@ export function Header() {
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar,
         width: "100%",
-        bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? "rgba(18, 19, 17, 0.86)" : "rgba(248, 247, 244, 0.86)",
+        bgcolor: (theme) => alpha(theme.palette.background.paper, 0.82),
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
         borderColor: "divider",
