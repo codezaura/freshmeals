@@ -8,6 +8,7 @@ import { RouterLink } from "@/routes";
 import { Logo } from "@/components/logo";
 
 import { NavLink } from "./nav-link";
+import { ThemeToggle } from "./theme-toggle";
 import { navItems, type NavItem } from "./config-nav";
 
 function NavUl({ navData }: { navData: NavItem[] }) {
@@ -43,9 +44,12 @@ export function Header() {
       >
         <Logo />
         <NavUl navData={navItems} />
-        <Button component={RouterLink} href="/login" variant="contained" size="small">
-          Login
-        </Button>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <ThemeToggle />
+          <Button component={RouterLink} href="/login" variant="contained" size="small">
+            Login
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
