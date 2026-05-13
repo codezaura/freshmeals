@@ -34,10 +34,17 @@ export function Header() {
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar,
         width: "100%",
-        bgcolor: (theme) => alpha(theme.palette.background.paper, 0.82),
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark"
+            ? alpha(theme.palette.grey[900], 0.76)
+            : alpha(theme.palette.common.white, 0.82),
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
-        borderColor: "divider",
+        borderColor: (theme) => alpha(theme.palette.divider, theme.palette.mode === "dark" ? 0.5 : 1),
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "0 8px 24px rgba(0,0,0,0.28)"
+            : "0 8px 24px rgba(31,31,28,0.08)",
       }}
     >
       <Container
