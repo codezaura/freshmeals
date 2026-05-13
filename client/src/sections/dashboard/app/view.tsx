@@ -21,7 +21,12 @@ import { useGetAllMeals } from "@/actions/meal";
 import { LoadingScreen } from "@/components/loading";
 import { DashboardContent } from "@/components/layout/main";
 
-const formatPrice = (price: number) => `$${price.toFixed(2)}`;
+const formatPrice = (price: number | string) => {
+  const numericPrice = typeof price === "number" ? price : Number(price);
+  const safePrice = Number.isFinite(numericPrice) ? numericPrice : 0;
+
+  return `$${safePrice.toFixed(2)}`;
+};
 
 export function DashboardAppView() {
   const { data, isLoading, error } = useGetAllMeals();
