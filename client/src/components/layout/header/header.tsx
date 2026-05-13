@@ -29,23 +29,22 @@ export function Header() {
   return (
     <Box
       component="header"
-      sx={{
+      sx={(theme) => ({
         position: "sticky",
         top: 0,
-        zIndex: (theme) => theme.zIndex.appBar,
+        zIndex: theme.zIndex.appBar,
         width: "100%",
-        bgcolor: (theme) =>
-          theme.palette.mode === "dark"
-            ? alpha(theme.palette.grey[900], 0.76)
-            : alpha(theme.palette.common.white, 0.82),
+        bgcolor: alpha(theme.palette.common.white, 0.82),
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid",
-        borderColor: (theme) => alpha(theme.palette.divider, theme.palette.mode === "dark" ? 0.5 : 1),
-        boxShadow: (theme) =>
-          theme.palette.mode === "dark"
-            ? "0 8px 24px rgba(0,0,0,0.28)"
-            : "0 8px 24px rgba(31,31,28,0.08)",
-      }}
+        borderColor: alpha(theme.palette.divider, 1),
+        boxShadow: "0 8px 24px rgba(31,31,28,0.08)",
+        ...theme.applyStyles("dark", {
+          bgcolor: alpha(theme.palette.grey[900], 0.76),
+          borderColor: alpha(theme.palette.divider, 0.5),
+          boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+        }),
+      })}
     >
       <Container
         maxWidth="lg"
